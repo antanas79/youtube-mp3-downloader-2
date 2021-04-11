@@ -1,0 +1,22 @@
+<div>{{text}}</div>
+<br />
+<div class="d-flex col-12 col-md-6 p-0" *ngIf="data">
+	<div class="d-flex flex-column first pl-0 pr-3">
+		<div class="py-2">Monthly Income:</div>
+		<div class="py-2">Contact Method:</div>
+		<div class="py-2">Contact:</div>
+		<div class="py-2">Loan Amount:</div>
+	</div>
+	<div class="d-flex flex-column second p-0">
+		<div class="py-2">{{ data[0].income}} (EUR)</div>
+		<div class="py-2">{{isEmail ? 'Email' : 'Phone'}}</div>
+		<div class="py-2 text-overflow-hidden">
+			<span *ngIf="isEmail"> {{ data[2].contact}} </span>
+			<span *ngIf="!isEmail">
+				(+370) {{ data[2].contact?.slice(0,3) }} {{
+				data[2].contact?.slice(3,8) }}
+			</span>
+		</div>
+		<div class="py-2">{{data[3].amount}} (EUR)</div>
+	</div>
+</div>
