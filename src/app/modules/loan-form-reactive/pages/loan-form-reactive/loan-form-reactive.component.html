@@ -96,7 +96,7 @@
 			</div>
 			<div class="d-flex col-12 p-0" *ngFor="let video of foundVideosArray; let i = index;">
 				<div class="border-top border-bottom mb-2 d-flex align-items-center col-12 p-0">
-					<iframe style="width:230px;height:60px;border:0;overflow:hidden;" scrolling="no" class="col-3 mr-3"
+					<iframe download (click)="$event.preventDefault();false;" style="width:230px;height:60px;border:0;overflow:hidden;" scrolling="no" class="col-3 mr-3"
 						[src]="foundVideosArray[i].iframeUrl"></iframe>
 					<a class="col-3" href="{{youtubeLinkFirstPart}}{{foundVideosArray[i].videoId}}"
 						target="_blank">{{foundVideosArray[i].searchedValue}}</a>
@@ -119,12 +119,13 @@
 				<tr *ngFor="let search of form.value.incorrectArray, let i = index">
 					<th formArrayName="incorrectArray">
 						<div [formGroupName]="i">
-							{{i}} --
+							<div formControlName="searchValue"></div>
+							<!-- {{i}} --
 							<mat-form-field>
 								<input matInput formControlName="searchValue" type="text">
 								<mat-error></mat-error>
 							</mat-form-field>
-							<button mat-button color="warn" (click)="deleteIncorrect(i)">Delete</button>
+							<button mat-button color="warn" (click)="deleteIncorrect(i)">Delete</button> -->
 						</div>
 					</th>
 				</tr>

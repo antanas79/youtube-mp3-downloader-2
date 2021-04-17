@@ -97,11 +97,12 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 	}
 
 	loadClient() {
-		this.window.gapi.client.setApiKey("AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw");
+		// this.window.gapi.client.setApiKey("AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"); //a.popliauskis
+		this.window.gapi.client.setApiKey("AIzaSyDvEs9yxwfpbDg3TpF17utrLB_qqzPYmgw"); //a.popliauska
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return this.window.gapi.client
 			.load(
-				"https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
+				"https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest" 
 			)
 			.then(
 				function () {
@@ -126,15 +127,15 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 									(res: any) => {
 										let url = 'https://loader.to/api/button/?url=' + this.youtubeLinkFirstPart + resp.items[0].id.videoId + '&f=mp3&color=64c896';
 										let sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-										this.foundVideosArray[i] =
-										{
+										this.foundVideosArray.push({
 											title: res.items[0].snippet.title,
 											videoId: resp.items[0].id.videoId,
 											iframeUrl: sanitizedUrl,
 											searchedValue: this.form.value.searchArray[i].searchValue
-										};
+										});
 										setTimeout(function () {
-											if (this.form.value.searchArray.length - 1 == i) {
+											if (this.form?.value?.searchArray?.length - 1 == i) {
+												console.log(this.foundVideosArray)
 												let searchlist = (this.form.get('searchArray') as FormArray);
 												searchlist.clear();
 												this.loaded = true;
