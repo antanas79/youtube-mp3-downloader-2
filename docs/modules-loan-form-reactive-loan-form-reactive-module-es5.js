@@ -128,7 +128,13 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _components_loader_loader_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ./components/loader/loader.component */
+      "iYg1");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/core */
       "fXoL");
 
@@ -140,10 +146,10 @@
         return new (t || LoanFormReactiveModule)();
       };
 
-      LoanFormReactiveModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineNgModule"]({
+      LoanFormReactiveModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineNgModule"]({
         type: LoanFormReactiveModule
       });
-      LoanFormReactiveModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineInjector"]({
+      LoanFormReactiveModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjector"]({
         providers: [{
           provide: _pages_loan_form_reactive_loan_form_reactive_component__WEBPACK_IMPORTED_MODULE_2__["googleApiWindow"],
           useValue: window
@@ -152,8 +158,8 @@
       });
 
       (function () {
-        (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsetNgModuleScope"](LoanFormReactiveModule, {
-          declarations: [_pages_loan_form_reactive_loan_form_reactive_component__WEBPACK_IMPORTED_MODULE_2__["LoanFormReactiveComponent"], _components_summary_summary_component__WEBPACK_IMPORTED_MODULE_4__["SummaryComponent"], _components_intro_intro_component__WEBPACK_IMPORTED_MODULE_5__["IntroComponent"]],
+        (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵsetNgModuleScope"](LoanFormReactiveModule, {
+          declarations: [_pages_loan_form_reactive_loan_form_reactive_component__WEBPACK_IMPORTED_MODULE_2__["LoanFormReactiveComponent"], _components_summary_summary_component__WEBPACK_IMPORTED_MODULE_4__["SummaryComponent"], _components_intro_intro_component__WEBPACK_IMPORTED_MODULE_5__["IntroComponent"], _components_loader_loader_component__WEBPACK_IMPORTED_MODULE_6__["LoaderComponent"]],
           imports: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"], _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__["SharedModule"], _loan_form_reactive_routing_module__WEBPACK_IMPORTED_MODULE_1__["LoanFormReactiveRoutingModule"]]
         });
       })();

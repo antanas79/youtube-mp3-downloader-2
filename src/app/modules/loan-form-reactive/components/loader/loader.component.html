@@ -1,0 +1,12 @@
+
+<div>
+	<button id="downloadButton"  style="color: red;">
+		Download  progress {{progress  || 0}} / 100%
+	</button>
+	<ng-container *ngIf="downloadUrl">	<a id={{youtubeVideoId}} href={{downloadUrl}} id="download" style="margin:0 auto; display: flex; align-self: center;">
+		Downloaded
+	</a></ng-container>
+
+</div>
+
+

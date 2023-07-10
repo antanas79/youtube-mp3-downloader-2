@@ -28,9 +28,15 @@ export class googleApiWindow extends Window {
 }
 window.gapi = window.gapi || {};
 
+export const defaultProjects=  [{name: "youtube-mp3-downloader-392415", apiKey: "AIzaSyBTqkGKqxG1HWRPf7E7c4FSdWjBlIaWVZw"},
+{name: "youtube-downloader-310313", apiKey: "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"}];
+
 @Injectable({
 	providedIn: "root"
 })
+
+
+
 @Component({
 	selector: "app-loan-form-reactive",
 	templateUrl: "./loan-form-reactive.component.html",
@@ -43,6 +49,8 @@ window.gapi = window.gapi || {};
 		QuestionService
 	]
 })
+
+	
 export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 	private ngUnsubscribe = new Subject();
 	youtubeLinkFirstPart = "https://www.youtube.com/watch?v=";
@@ -52,9 +60,7 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 	foundVideosArray = [];
 	iframeUrls = [];
 	titlesArray = [];
-	projects =  [{name: "youtube-mp3-downloader-310317", apiKey: "AIzaSyCBdENLaNBmlzLO8pOkW6U0fB1ck8ZZfmw"},
-	{name: "youtube-downloader-310313", apiKey: "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"}, {name: "yelp-camp-final-192619", apiKey: "AIzaSyAxR0JLrvXg7JG9vw4ZIsNrRRpj_1s3anQ"},
-	{name: "antano-projektas-1527270489554", apiKey: "AIzaSyBysEdNbj0M6ukqvcUz6C9cZETj4BbXWNk"}, {name: "my-project-1516388874589", apiKey: "AIzaSyD72RK3MzzkeKT7qtejBjieqXiWcBOC0N4"}];
+	projects =  defaultProjects;
 	
 
 	constructor(
@@ -66,6 +72,7 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 	) {}
 
 	ngOnInit(): void {
+		
 		this.route.queryParams.subscribe(params => {
 			if (params['projects'] && JSON.parse(params['projects'])) {
 				this.projects=  JSON.parse(params['projects']);
@@ -90,6 +97,7 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	authenticate() {
+		console.log({apiKey: this.projects.find(p => p.name === localStorage.getItem("project"))?.apiKey})
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return this.window.gapi.auth2
 			?.getAuthInstance()
@@ -107,9 +115,11 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	loadClient() {
+
 		this.window.gapi.client.setApiKey(
 			this.projects.find(p => p.name === localStorage.getItem("project"))?.apiKey || "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"
 		);
+		console.log({apiKey: this.projects.find(p => p.name === localStorage.getItem("project"))?.apiKey})
 		//a.popliauskis
 		return this.window.gapi.client
 			?.load(
@@ -138,7 +148,7 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 							.subscribe((res: any) => {
 								console.log({window: this.window.location.href})
 								console.log({windowIncludes: this.window.location.href.includes("localhost")})
-								let url =  (this.window.location.href.includes("localhost") ? "" : "./") + "assets/loader.html/?url=" +
+								let url =  
 									this.youtubeLinkFirstPart +
 									resp.items[0].id.videoId +
 									"&f=mp3&color=64c896&youtubeVideoId=" +resp.items[0].id.videoId;
@@ -147,6 +157,7 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 								let sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
 									url
 								);
+
 								this.foundVideosArray.push({
 									title: res.items[0].snippet.title,
 									videoId: resp.items[0].id.videoId,

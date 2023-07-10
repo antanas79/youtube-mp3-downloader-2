@@ -347,25 +347,50 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _loan_form_reactive_pages_loan_form_reactive_loan_form_reactive_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! ../../loan-form-reactive/pages/loan-form-reactive/loan-form-reactive.component */
+      "UjCR");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/core */
       "fXoL");
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! @angular/router */
+      "tyNb");
+      /* harmony import */
+
+
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/common/http */
       "tk/3");
 
       var QuestionService = /*#__PURE__*/function () {
         function QuestionService( // @Inject(googleApiWindow) public window: googleApiWindow,
-        http) {
+        route, http) {
           _classCallCheck(this, QuestionService);
 
+          this.route = route;
           this.http = http;
+          this.projects = _loan_form_reactive_pages_loan_form_reactive_loan_form_reactive_component__WEBPACK_IMPORTED_MODULE_4__["defaultProjects"];
         }
 
         _createClass(QuestionService, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            var _this = this;
+
+            this.route.queryParams.subscribe(function (params) {
+              if (params['projects'] && JSON.parse(params['projects'])) {
+                _this.projects = JSON.parse(params['projects']);
+              }
+            });
+          }
+        }, {
           key: "getLoanStepsWithQuestions",
           value: function getLoanStepsWithQuestions() {
             var steps = [new _classes_step__WEBPACK_IMPORTED_MODULE_1__["Step"]({
@@ -445,12 +470,20 @@
         }, {
           key: "getVideoId",
           value: function getVideoId(q) {
-            return this.http.get('https://youtube.googleapis.com/youtube/v3/search?maxResults=1&q=' + q + '&key=AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw');
+            var _a;
+
+            return this.http.get('https://youtube.googleapis.com/youtube/v3/search?maxResults=1&q=' + q + '&key=' + ((_a = this.projects.find(function (p) {
+              return p.name === localStorage.getItem("project");
+            })) === null || _a === void 0 ? void 0 : _a.apiKey));
           }
         }, {
           key: "getVideoTitleById",
           value: function getVideoTitleById(id) {
-            return this.http.get('https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + id + '&key=AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw');
+            var _a;
+
+            return this.http.get('https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + id + '&key=' + ((_a = this.projects.find(function (p) {
+              return p.name === localStorage.getItem("project");
+            })) === null || _a === void 0 ? void 0 : _a.apiKey));
           }
         }]);
 
@@ -458,10 +491,10 @@
       }();
 
       QuestionService.ɵfac = function QuestionService_Factory(t) {
-        return new (t || QuestionService)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"]));
+        return new (t || QuestionService)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"]));
       };
 
-      QuestionService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInjectable"]({
+      QuestionService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjectable"]({
         token: QuestionService,
         factory: QuestionService.ɵfac
       });
@@ -708,7 +741,7 @@
       !*** ./src/app/modules/loan-form-reactive/pages/loan-form-reactive/loan-form-reactive.component.ts ***!
       \*****************************************************************************************************/
 
-    /*! exports provided: googleApiWindow, LoanFormReactiveComponent */
+    /*! exports provided: googleApiWindow, defaultProjects, LoanFormReactiveComponent */
 
     /***/
     function UjCR(module, __webpack_exports__, __webpack_require__) {
@@ -720,6 +753,12 @@
 
       __webpack_require__.d(__webpack_exports__, "googleApiWindow", function () {
         return googleApiWindow;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "defaultProjects", function () {
+        return defaultProjects;
       });
       /* harmony export (binding) */
 
@@ -799,6 +838,12 @@
       var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
+      /* harmony import */
+
+
+      var _components_loader_loader_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      /*! ../../components/loader/loader.component */
+      "iYg1");
 
       function LoanFormReactiveComponent_div_9_Template(rf, ctx) {
         if (rf & 1) {
@@ -1058,64 +1103,61 @@
 
       function LoanFormReactiveComponent_ng_container_14_div_13_Template(rf, ctx) {
         if (rf & 1) {
-          var _r28 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵgetCurrentView"]();
+          var _r27 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵgetCurrentView"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "div", 17);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](1, "div", 18);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](2, "iframe", 22);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](2, "div", 19);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function LoanFormReactiveComponent_ng_container_14_div_13_Template_iframe_click_2_listener($event) {
-            $event.preventDefault();
-            return false;
-          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](3, "app-loader", 22);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](3, "a", 23);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](4, "a", 23);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](4);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](5, "div", 19);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](5);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](7, "div", 24);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](6, "div", 19);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](8, "button", 25);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function LoanFormReactiveComponent_ng_container_14_div_13_Template_button_click_8_listener() {
-            _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r28);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](8, "div", 24);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](9, "button", 25);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function LoanFormReactiveComponent_ng_container_14_div_13_Template_button_click_9_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r27);
 
             var i_r25 = ctx.index;
 
-            var ctx_r27 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](2);
+            var ctx_r26 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](2);
 
-            return ctx_r27.moveToIncorrectList(i_r25);
+            return ctx_r26.moveToIncorrectList(i_r25);
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](9, "Move To Incorrect");
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](10, "Move To Incorrect");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](10, "button", 26);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](11, "button", 26);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function LoanFormReactiveComponent_ng_container_14_div_13_Template_button_click_10_listener() {
-            _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r28);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function LoanFormReactiveComponent_ng_container_14_div_13_Template_button_click_11_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r27);
 
             var i_r25 = ctx.index;
 
-            var ctx_r29 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](2);
+            var ctx_r28 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](2);
 
-            return ctx_r29.deleteFound(i_r25);
+            return ctx_r28.deleteFound(i_r25);
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](11, "Delete");
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](12, "Delete");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
 
@@ -1131,9 +1173,9 @@
 
           var ctx_r22 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("src", ctx_r22.foundVideosArray[i_r25].iframeUrl, _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsanitizeResourceUrl"]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("passedUrl", ctx_r22.foundVideosArray[i_r25].iframeUrl);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](1);
 
@@ -1167,11 +1209,11 @@
         }
 
         if (rf & 2) {
-          var i_r32 = ctx.index;
+          var i_r31 = ctx.index;
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("formGroupName", i_r32);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("formGroupName", i_r31);
         }
       }
 
@@ -1237,7 +1279,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](13, LoanFormReactiveComponent_ng_container_14_div_13_Template, 12, 5, "div", 20);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](13, LoanFormReactiveComponent_ng_container_14_div_13_Template, 13, 5, "div", 20);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](14, LoanFormReactiveComponent_ng_container_14_div_14_Template, 5, 1, "div", 21);
 
@@ -1272,6 +1314,13 @@
       }( /*#__PURE__*/_wrapNativeSuper(Window));
 
       window.gapi = window.gapi || {};
+      var defaultProjects = [{
+        name: "youtube-mp3-downloader-392415",
+        apiKey: "AIzaSyBTqkGKqxG1HWRPf7E7c4FSdWjBlIaWVZw"
+      }, {
+        name: "youtube-downloader-310313",
+        apiKey: "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"
+      }];
 
       var LoanFormReactiveComponent = /*#__PURE__*/function () {
         function LoanFormReactiveComponent(window, _formBuilder, questionService, sanitizer, route) {
@@ -1289,34 +1338,19 @@
           this.foundVideosArray = [];
           this.iframeUrls = [];
           this.titlesArray = [];
-          this.projects = [{
-            name: "youtube-mp3-downloader-310317",
-            apiKey: "AIzaSyCBdENLaNBmlzLO8pOkW6U0fB1ck8ZZfmw"
-          }, {
-            name: "youtube-downloader-310313",
-            apiKey: "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"
-          }, {
-            name: "yelp-camp-final-192619",
-            apiKey: "AIzaSyAxR0JLrvXg7JG9vw4ZIsNrRRpj_1s3anQ"
-          }, {
-            name: "antano-projektas-1527270489554",
-            apiKey: "AIzaSyBysEdNbj0M6ukqvcUz6C9cZETj4BbXWNk"
-          }, {
-            name: "my-project-1516388874589",
-            apiKey: "AIzaSyD72RK3MzzkeKT7qtejBjieqXiWcBOC0N4"
-          }];
+          this.projects = defaultProjects;
         }
 
         _createClass(LoanFormReactiveComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this = this;
+            var _this2 = this;
 
             var _a;
 
             this.route.queryParams.subscribe(function (params) {
               if (params['projects'] && JSON.parse(params['projects'])) {
-                _this.projects = JSON.parse(params['projects']);
+                _this2.projects = JSON.parse(params['projects']);
               }
             });
             (_a = this.authenticate()) === null || _a === void 0 ? void 0 : _a.then(this.loadClient());
@@ -1342,10 +1376,15 @@
         }, {
           key: "authenticate",
           value: function authenticate() {
-            var _a, _b; // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            var _a, _b, _c;
 
+            console.log({
+              apiKey: (_a = this.projects.find(function (p) {
+                return p.name === localStorage.getItem("project");
+              })) === null || _a === void 0 ? void 0 : _a.apiKey
+            }); // eslint-disable-next-line @typescript-eslint/no-unsafe-return
 
-            return (_b = (_a = this.window.gapi.auth2) === null || _a === void 0 ? void 0 : _a.getAuthInstance()) === null || _b === void 0 ? void 0 : _b.signIn({
+            return (_c = (_b = this.window.gapi.auth2) === null || _b === void 0 ? void 0 : _b.getAuthInstance()) === null || _c === void 0 ? void 0 : _c.signIn({
               scope: "https://www.googleapis.com/auth/youtube.force-ssl"
             }).then(function () {
               console.log("Sign-in successful");
@@ -1356,13 +1395,18 @@
         }, {
           key: "loadClient",
           value: function loadClient() {
-            var _a, _b, _c;
+            var _a, _b, _c, _d;
 
             this.window.gapi.client.setApiKey(((_a = this.projects.find(function (p) {
               return p.name === localStorage.getItem("project");
-            })) === null || _a === void 0 ? void 0 : _a.apiKey) || "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"); //a.popliauskis
+            })) === null || _a === void 0 ? void 0 : _a.apiKey) || "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw");
+            console.log({
+              apiKey: (_b = this.projects.find(function (p) {
+                return p.name === localStorage.getItem("project");
+              })) === null || _b === void 0 ? void 0 : _b.apiKey
+            }); //a.popliauskis
 
-            return (_c = (_b = this.window.gapi.client) === null || _b === void 0 ? void 0 : _b.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")) === null || _c === void 0 ? void 0 : _c.then(function () {
+            return (_d = (_c = this.window.gapi.client) === null || _c === void 0 ? void 0 : _c.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")) === null || _d === void 0 ? void 0 : _d.then(function () {
               console.log("GAPI client loaded for API");
             }, function (err) {
               console.error("Error loading GAPI client for API", err);
@@ -1371,30 +1415,30 @@
         }, {
           key: "search",
           value: function search() {
-            var _this2 = this;
+            var _this3 = this;
 
             var _loop = function _loop(i) {
-              _this2.questionService.getVideoId(_this2.form.value.searchArray[i].searchValue).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this2.ngUnsubscribe)).subscribe(function (resp) {
+              _this3.questionService.getVideoId(_this3.form.value.searchArray[i].searchValue).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this3.ngUnsubscribe)).subscribe(function (resp) {
                 if (resp) {
-                  _this2.questionService.getVideoTitleById(resp.items[0].id.videoId).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this2.ngUnsubscribe)).subscribe(function (res) {
+                  _this3.questionService.getVideoTitleById(resp.items[0].id.videoId).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this3.ngUnsubscribe)).subscribe(function (res) {
                     console.log({
-                      window: _this2.window.location.href
+                      window: _this3.window.location.href
                     });
                     console.log({
-                      windowIncludes: _this2.window.location.href.includes("localhost")
+                      windowIncludes: _this3.window.location.href.includes("localhost")
                     });
-                    var url = (_this2.window.location.href.includes("localhost") ? "" : "./") + "assets/loader.html/?url=" + _this2.youtubeLinkFirstPart + resp.items[0].id.videoId + "&f=mp3&color=64c896&youtubeVideoId=" + resp.items[0].id.videoId;
+                    var url = _this3.youtubeLinkFirstPart + resp.items[0].id.videoId + "&f=mp3&color=64c896&youtubeVideoId=" + resp.items[0].id.videoId;
                     console.log({
                       url: url
                     });
 
-                    var sanitizedUrl = _this2.sanitizer.bypassSecurityTrustResourceUrl(url);
+                    var sanitizedUrl = _this3.sanitizer.bypassSecurityTrustResourceUrl(url);
 
-                    _this2.foundVideosArray.push({
+                    _this3.foundVideosArray.push({
                       title: res.items[0].snippet.title,
                       videoId: resp.items[0].id.videoId,
                       iframeUrl: sanitizedUrl,
-                      searchedValue: _this2.form.value.searchArray[i].searchValue
+                      searchedValue: _this3.form.value.searchArray[i].searchValue
                     });
 
                     setTimeout(function () {
@@ -1454,12 +1498,12 @@
         }, {
           key: "submit",
           value: function submit() {
-            var _this3 = this;
+            var _this4 = this;
 
             var enteredSearchArray = this.form.getRawValue().search.split("\n");
             var editableSearchArray = this.form.controls.editableSearchArray;
             enteredSearchArray.forEach(function (search) {
-              editableSearchArray.push(_this3._formBuilder.group({
+              editableSearchArray.push(_this4._formBuilder.group({
                 searchValue: [search]
               }));
             });
@@ -1530,7 +1574,7 @@
         }, _shared_services_question_service__WEBPACK_IMPORTED_MODULE_1__["QuestionService"]]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵNgOnChangesFeature"]],
         decls: 15,
         vars: 6,
-        consts: [[1, "col-12", "p-0", "d-flex", "flex-wrap", 3, "formGroup"], [1, "col-6", "p-0"], ["matInput", "", "formControlName", "search"], ["mat-button", "", "type", "submit", 3, "click"], [4, "ngIf"], [4, "ngFor", "ngForOf"], ["mat-raised-button", "", 3, "click", 4, "ngIf"], ["class", "col-6 p-0", 4, "ngIf"], ["matInput", "", "formControlName", "numberToTrimFromStart", "type", "number", "placeholder", "How many chars to trim from start"], ["mat-button", "", 3, "click"], ["matInput", "", "formControlName", "whatCharacterToTrim", "type", "text", "placeholder", "What character to trim"], ["formArrayName", "editableSearchArray"], [3, "formGroupName"], ["matInput", "", "formControlName", "searchValue", "type", "text"], ["mat-button", "", "color", "warn", 3, "click"], ["mat-raised-button", "", 3, "click"], ["formArrayName", "searchArray"], [1, "d-flex", "col-12", "p-0"], [1, "border-top", "border-bottom", "mb-2", "d-flex", "align-items-center", "col-12", "p-0"], [1, "col-3"], ["class", "d-flex col-12 p-0", 4, "ngFor", "ngForOf"], ["class", "mt-3 pt-3", 4, "ngIf"], ["download", "", "scrolling", "no", 1, "col-3", "mr-3", 2, "width", "230px", "height", "60px", "border", "0", "overflow", "hidden", 3, "src", "click"], ["target", "_blank", 1, "col-3", 3, "href"], [1, "col-3", "d-flex"], ["mat-raised-button", "", "color", "accent", 1, "mr-1", 3, "click"], ["mat-raised-button", "", "color", "warn", 3, "click"], [1, "mt-3", "pt-3"], ["formArrayName", "incorrectArray"], ["formControlName", "searchValue"]],
+        consts: [[1, "col-12", "p-0", "d-flex", "flex-wrap", 3, "formGroup"], [1, "col-6", "p-0"], ["matInput", "", "formControlName", "search"], ["mat-button", "", "type", "submit", 3, "click"], [4, "ngIf"], [4, "ngFor", "ngForOf"], ["mat-raised-button", "", 3, "click", 4, "ngIf"], ["class", "col-6 p-0", 4, "ngIf"], ["matInput", "", "formControlName", "numberToTrimFromStart", "type", "number", "placeholder", "How many chars to trim from start"], ["mat-button", "", 3, "click"], ["matInput", "", "formControlName", "whatCharacterToTrim", "type", "text", "placeholder", "What character to trim"], ["formArrayName", "editableSearchArray"], [3, "formGroupName"], ["matInput", "", "formControlName", "searchValue", "type", "text"], ["mat-button", "", "color", "warn", 3, "click"], ["mat-raised-button", "", 3, "click"], ["formArrayName", "searchArray"], [1, "d-flex", "col-12", "p-0"], [1, "border-top", "border-bottom", "mb-2", "d-flex", "align-items-center", "col-12", "p-0"], [1, "col-3"], ["class", "d-flex col-12 p-0", 4, "ngFor", "ngForOf"], ["class", "mt-3 pt-3", 4, "ngIf"], [3, "passedUrl"], ["target", "_blank", 1, "col-3", 3, "href"], [1, "col-3", "d-flex"], ["mat-raised-button", "", "color", "accent", 1, "mr-1", 3, "click"], ["mat-raised-button", "", "color", "warn", 3, "click"], [1, "mt-3", "pt-3"], ["formArrayName", "incorrectArray"], ["formControlName", "searchValue"]],
         template: function LoanFormReactiveComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "div");
@@ -1604,7 +1648,7 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.foundVideosArray.length > 0);
           }
         },
-        directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_8__["MatFormField"], _angular_material_input__WEBPACK_IMPORTED_MODULE_9__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControlName"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_8__["MatError"], _angular_material_button__WEBPACK_IMPORTED_MODULE_10__["MatButton"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NumberValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormArrayName"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupName"]],
+        directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_8__["MatFormField"], _angular_material_input__WEBPACK_IMPORTED_MODULE_9__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControlName"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_8__["MatError"], _angular_material_button__WEBPACK_IMPORTED_MODULE_10__["MatButton"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NumberValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormArrayName"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupName"], _components_loader_loader_component__WEBPACK_IMPORTED_MODULE_12__["LoaderComponent"]],
         styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJsb2FuLWZvcm0tcmVhY3RpdmUuY29tcG9uZW50LnNjc3MifQ== */"]
       });
       LoanFormReactiveComponent.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjectable"]({
@@ -1753,6 +1797,182 @@
     },
 
     /***/
+    "iYg1":
+    /*!**********************************************************************************!*\
+      !*** ./src/app/modules/loan-form-reactive/components/loader/loader.component.ts ***!
+      \**********************************************************************************/
+
+    /*! exports provided: LoaderComponent */
+
+    /***/
+    function iYg1(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "LoaderComponent", function () {
+        return LoaderComponent;
+      });
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/common */
+      "ofXK");
+
+      function LoaderComponent_ng_container_3_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a", 2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, " Downloaded ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("id", ctx_r0.youtubeVideoId);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("href", ctx_r0.downloadUrl, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+        }
+      }
+
+      var LoaderComponent = /*#__PURE__*/function () {
+        function LoaderComponent(elementRef) {
+          _classCallCheck(this, LoaderComponent);
+
+          this.elementRef = elementRef;
+          this.downloadUrl = ""; //do nothing
+        }
+
+        _createClass(LoaderComponent, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            //@ts-ignore
+            console.log({
+              url: this.passedUrl.changingThisBreaksApplicationSecurity
+            }); //@ts-ignore
+
+            this.link_now = new URL(this.passedUrl.changingThisBreaksApplicationSecurity);
+            this.youtubeVideoId = this.link_now.searchParams.get("youtubeVideoId");
+            this.format = this.link_now.searchParams.get("f");
+            this.buttonTitle = this.link_now;
+            this.download();
+          }
+        }, {
+          key: "download",
+          value: function download() {
+            var _this5 = this;
+
+            fetch("https://loader.to/ajax/download.php?button=1&start=" + 1 + "&end=" + 1 + "&format=" + this.format + "&url=" + encodeURIComponent(this.link_now), {
+              headers: {
+                'Accept': 'application/json'
+              }
+            }).then(function (response) {
+              return response.json();
+            }).then(function (response) {
+              return _this5.showProgressAndSetDownloadUrl(response.id);
+            });
+          }
+        }, {
+          key: "showProgressAndSetDownloadUrl",
+          value: function showProgressAndSetDownloadUrl(i) {
+            var _this6 = this;
+
+            fetch("https://loader.to/ajax/progress.php?id=" + i, {
+              headers: {
+                'Accept': 'application/json'
+              }
+            }).then(function (response) {
+              return response.json();
+            }).then(function (response) {
+              console.log({
+                response: response
+              });
+              _this6.progress = response.progress / 10;
+
+              if (response.download_url != null && response.success == 1) {
+                window.parent.postMessage({
+                  youtubeVideoId: _this6.youtubeVideoId,
+                  downloaded: true
+                }, "*");
+                _this6.downloadUrl = response.download_url;
+                return;
+              } //@ts-ignore
+
+
+              setTimeout(_this6.showProgressAndSetDownloadUrl(i), 750);
+            })["catch"](function (e) {
+              return (//@ts-ignore
+                setTimeout(_this6.showProgressAndSetDownloadUrl(i), 750)
+              );
+            });
+          }
+        }]);
+
+        return LoaderComponent;
+      }();
+
+      LoaderComponent.ɵfac = function LoaderComponent_Factory(t) {
+        return new (t || LoaderComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]));
+      };
+
+      LoaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+        type: LoaderComponent,
+        selectors: [["app-loader"]],
+        inputs: {
+          passedUrl: "passedUrl"
+        },
+        decls: 4,
+        vars: 2,
+        consts: [["id", "downloadButton", 2, "color", "red"], [4, "ngIf"], ["id", "download", 2, "margin", "0 auto", "display", "flex", "align-self", "center", 3, "id", "href"]],
+        template: function LoaderComponent_Template(rf, ctx) {
+          if (rf & 1) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 0);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, LoaderComponent_ng_container_3_Template, 3, 2, "ng-container", 1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          }
+
+          if (rf & 2) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" Download progress ", ctx.progress || 0, " / 100% ");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.downloadUrl);
+          }
+        },
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgIf"]],
+        styles: ["html[_ngcontent-%COMP%], body[_ngcontent-%COMP%] {\n  height: 100%;\n  padding: 0;\n  margin: 0;\n  overflow: hidden;\n}\n\nbody[_ngcontent-%COMP%] {\n  font-family: \"Open Sans\", sans-serif;\n  color: black;\n  font-size: 24px;\n}\n\n@media (max-height: 150px) and (max-width: 400px) {\n  body[_ngcontent-%COMP%] {\n    font-size: 18px;\n  }\n}\n\n@media (max-width: 200px) {\n  body[_ngcontent-%COMP%] {\n    font-size: 14px;\n  }\n\n  svg[_ngcontent-%COMP%] {\n    display: none;\n  }\n}\n\nbutton[_ngcontent-%COMP%] {\n  font-size: 1em;\n  border-radius: 2px;\n  border: 0;\n  font-family: \"Open Sans\", sans-serif;\n  height: 100%;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  cursor: pointer;\n}\n\n.progress-button[_ngcontent-%COMP%] {\n  display: inline-block;\n  font-size: 1em;\n  color: #fff !important;\n  text-decoration: none !important;\n  line-height: 1;\n  overflow: hidden;\n  position: relative;\n  text-align: center;\n  width: 100%;\n  height: 100%;\n  box-shadow: 0 1px 1px #ccc;\n  border-radius: 2px;\n  cursor: pointer;\n  background-color: #64c896;\n}\n\n#downloadButton[_ngcontent-%COMP%]:hover   .progress-button[_ngcontent-%COMP%] {\n  filter: brightness(95%);\n}\n\n.progress-button.in-progress[_ngcontent-%COMP%], .progress-button.finished[_ngcontent-%COMP%] {\n  color: transparent !important;\n}\n\n.progress-button.in-progress[_ngcontent-%COMP%]:after, .progress-button.finished[_ngcontent-%COMP%]:after {\n  position: absolute;\n  z-index: 2;\n  width: 100%;\n  height: 100%;\n  text-align: center;\n  top: 0;\n  padding-top: inherit;\n  color: #fff !important;\n  left: 0;\n}\n\n.progress-button.in-progress[_ngcontent-%COMP%]:after {\n  content: attr(data-loading);\n}\n\n.progress-button.finished[_ngcontent-%COMP%]:after {\n  content: attr(data-finished);\n}\n\n.progress-button[_ngcontent-%COMP%]   .tz-bar[_ngcontent-%COMP%] {\n  background-color: #4e9672;\n  height: 3px;\n  bottom: 0;\n  left: 0;\n  width: 0;\n  position: absolute;\n  z-index: 1;\n  border-radius: 0 0 2px 2px;\n  transition: width 0.5s, height 0.5s;\n}\n\n.progress-button[_ngcontent-%COMP%]   .tz-bar.background-horizontal[_ngcontent-%COMP%] {\n  height: 100%;\n  border-radius: 2px;\n}\n\n.progress-button[_ngcontent-%COMP%]   .tz-bar.background-vertical[_ngcontent-%COMP%] {\n  height: 0;\n  top: 0;\n  width: 100%;\n  border-radius: 2px;\n}\n\n.buttonTitle[_ngcontent-%COMP%] {\n  font-size: 0.5em;\n  margin-top: 4px;\n}\n\n#container[_ngcontent-%COMP%] {\n  height: 100%;\n  text-align: center;\n}\n\n#container[_ngcontent-%COMP%]:before {\n  content: \"\";\n  display: inline-block;\n  vertical-align: middle;\n  height: 100%;\n}\n\n#percentageText[_ngcontent-%COMP%] {\n  width: 95%;\n  display: inline-block;\n  position: relative;\n  vertical-align: middle;\n  z-index: 3;\n}\n\n.header[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  z-index: 1;\n  width: 100%;\n  background-color: #f1f1f1;\n}\n\n.progress-container[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 4px;\n  background: #ccc;\n}\n\n.progress-bar[_ngcontent-%COMP%] {\n  height: 4px;\n  background: #4caf50;\n  width: 0%;\n}\n\n.grecaptcha-badge[_ngcontent-%COMP%] {\n  visibility: hidden;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL2xvYWRlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTs7RUFFQyxZQUFBO0VBQ0EsVUFBQTtFQUNBLFNBQUE7RUFDQSxnQkFBQTtBQUFEOztBQUdBO0VBQ0Msb0NBQUE7RUFDQSxZQUFBO0VBQ0EsZUFBQTtBQUFEOztBQUdBO0VBQ0M7SUFDQyxlQUFBO0VBQUE7QUFDRjs7QUFHQTtFQUNDO0lBQ0MsZUFBQTtFQURBOztFQUlEO0lBQ0MsYUFBQTtFQURBO0FBQ0Y7O0FBSUE7RUFDQyxjQUFBO0VBQ0Esa0JBQUE7RUFDQSxTQUFBO0VBQ0Esb0NBQUE7RUFDQSxZQUFBO0VBQ0EsV0FBQTtFQUNBLFVBQUE7RUFDQSxTQUFBO0VBQ0EsZUFBQTtBQUZEOztBQUtBO0VBQ0MscUJBQUE7RUFDQSxjQUFBO0VBQ0Esc0JBQUE7RUFDQSxnQ0FBQTtFQUNBLGNBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLDBCQUFBO0VBQ0Esa0JBQUE7RUFDQSxlQUFBO0VBQ0EseUJBQUE7QUFGRDs7QUFLQTtFQUNDLHVCQUFBO0FBRkQ7O0FBS0E7O0VBRUMsNkJBQUE7QUFGRDs7QUFLQTs7RUFFQyxrQkFBQTtFQUNBLFVBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLGtCQUFBO0VBQ0EsTUFBQTtFQUNBLG9CQUFBO0VBQ0Esc0JBQUE7RUFDQSxPQUFBO0FBRkQ7O0FBS0E7RUFDQywyQkFBQTtBQUZEOztBQUtBO0VBQ0MsNEJBQUE7QUFGRDs7QUFLQTtFQUNDLHlCQUFBO0VBQ0EsV0FBQTtFQUNBLFNBQUE7RUFDQSxPQUFBO0VBQ0EsUUFBQTtFQUNBLGtCQUFBO0VBQ0EsVUFBQTtFQUNBLDBCQUFBO0VBR0EsbUNBQUE7QUFGRDs7QUFLQTtFQUNDLFlBQUE7RUFDQSxrQkFBQTtBQUZEOztBQUtBO0VBQ0MsU0FBQTtFQUNBLE1BQUE7RUFDQSxXQUFBO0VBQ0Esa0JBQUE7QUFGRDs7QUFLQTtFQUNDLGdCQUFBO0VBQ0EsZUFBQTtBQUZEOztBQUtBO0VBQ0MsWUFBQTtFQUNBLGtCQUFBO0FBRkQ7O0FBS0E7RUFDQyxXQUFBO0VBQ0EscUJBQUE7RUFDQSxzQkFBQTtFQUNBLFlBQUE7QUFGRDs7QUFLQTtFQUNDLFVBQUE7RUFDQSxxQkFBQTtFQUNBLGtCQUFBO0VBQ0Esc0JBQUE7RUFDQSxVQUFBO0FBRkQ7O0FBS0E7RUFDQyxlQUFBO0VBQ0EsTUFBQTtFQUNBLFVBQUE7RUFDQSxXQUFBO0VBQ0EseUJBQUE7QUFGRDs7QUFLQTtFQUNDLFdBQUE7RUFDQSxXQUFBO0VBQ0EsZ0JBQUE7QUFGRDs7QUFLQTtFQUNDLFdBQUE7RUFDQSxtQkFBQTtFQUNBLFNBQUE7QUFGRDs7QUFLQTtFQUNDLGtCQUFBO0FBRkQiLCJmaWxlIjoibG9hZGVyLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG5odG1sLFxuYm9keSB7XG5cdGhlaWdodDogMTAwJTtcblx0cGFkZGluZzogMDtcblx0bWFyZ2luOiAwO1xuXHRvdmVyZmxvdzogaGlkZGVuO1xufVxuXG5ib2R5IHtcblx0Zm9udC1mYW1pbHk6ICdPcGVuIFNhbnMnLCBzYW5zLXNlcmlmO1xuXHRjb2xvcjogYmxhY2s7XG5cdGZvbnQtc2l6ZTogMjRweDtcbn1cblxuQG1lZGlhIChtYXgtaGVpZ2h0OjE1MHB4KSBhbmQgKG1heC13aWR0aDo0MDBweCkge1xuXHRib2R5IHtcblx0XHRmb250LXNpemU6IDE4cHg7XG5cdH1cbn1cblxuQG1lZGlhIChtYXgtd2lkdGg6MjAwcHgpIHtcblx0Ym9keSB7XG5cdFx0Zm9udC1zaXplOiAxNHB4O1xuXHR9XG5cblx0c3ZnIHtcblx0XHRkaXNwbGF5OiBub25lO1xuXHR9XG59XG5cbmJ1dHRvbiB7XG5cdGZvbnQtc2l6ZTogMWVtO1xuXHRib3JkZXItcmFkaXVzOiAycHg7XG5cdGJvcmRlcjogMDtcblx0Zm9udC1mYW1pbHk6ICdPcGVuIFNhbnMnLCBzYW5zLXNlcmlmO1xuXHRoZWlnaHQ6IDEwMCU7XG5cdHdpZHRoOiAxMDAlO1xuXHRwYWRkaW5nOiAwO1xuXHRtYXJnaW46IDA7XG5cdGN1cnNvcjogcG9pbnRlcjtcbn1cblxuLnByb2dyZXNzLWJ1dHRvbiB7XG5cdGRpc3BsYXk6IGlubGluZS1ibG9jaztcblx0Zm9udC1zaXplOiAxZW07XG5cdGNvbG9yOiAjZmZmICFpbXBvcnRhbnQ7XG5cdHRleHQtZGVjb3JhdGlvbjogbm9uZSAhaW1wb3J0YW50O1xuXHRsaW5lLWhlaWdodDogMTtcblx0b3ZlcmZsb3c6IGhpZGRlbjtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHR0ZXh0LWFsaWduOiBjZW50ZXI7XG5cdHdpZHRoOiAxMDAlO1xuXHRoZWlnaHQ6IDEwMCU7XG5cdGJveC1zaGFkb3c6IDAgMXB4IDFweCAjY2NjO1xuXHRib3JkZXItcmFkaXVzOiAycHg7XG5cdGN1cnNvcjogcG9pbnRlcjtcblx0YmFja2dyb3VuZC1jb2xvcjogIzY0Yzg5Njtcbn1cblxuI2Rvd25sb2FkQnV0dG9uOmhvdmVyIC5wcm9ncmVzcy1idXR0b24ge1xuXHRmaWx0ZXI6IGJyaWdodG5lc3MoOTUlKTtcbn1cblxuLnByb2dyZXNzLWJ1dHRvbi5pbi1wcm9ncmVzcyxcbi5wcm9ncmVzcy1idXR0b24uZmluaXNoZWQge1xuXHRjb2xvcjogdHJhbnNwYXJlbnQgIWltcG9ydGFudDtcbn1cblxuLnByb2dyZXNzLWJ1dHRvbi5pbi1wcm9ncmVzczphZnRlcixcbi5wcm9ncmVzcy1idXR0b24uZmluaXNoZWQ6YWZ0ZXIge1xuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHotaW5kZXg6IDI7XG5cdHdpZHRoOiAxMDAlO1xuXHRoZWlnaHQ6IDEwMCU7XG5cdHRleHQtYWxpZ246IGNlbnRlcjtcblx0dG9wOiAwO1xuXHRwYWRkaW5nLXRvcDogaW5oZXJpdDtcblx0Y29sb3I6ICNmZmYgIWltcG9ydGFudDtcblx0bGVmdDogMDtcbn1cblxuLnByb2dyZXNzLWJ1dHRvbi5pbi1wcm9ncmVzczphZnRlciB7XG5cdGNvbnRlbnQ6IGF0dHIoZGF0YS1sb2FkaW5nKTtcbn1cblxuLnByb2dyZXNzLWJ1dHRvbi5maW5pc2hlZDphZnRlciB7XG5cdGNvbnRlbnQ6IGF0dHIoZGF0YS1maW5pc2hlZCk7XG59XG5cbi5wcm9ncmVzcy1idXR0b24gLnR6LWJhciB7XG5cdGJhY2tncm91bmQtY29sb3I6ICM0ZTk2NzI7XG5cdGhlaWdodDogM3B4O1xuXHRib3R0b206IDA7XG5cdGxlZnQ6IDA7XG5cdHdpZHRoOiAwO1xuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHotaW5kZXg6IDE7XG5cdGJvcmRlci1yYWRpdXM6IDAgMCAycHggMnB4O1xuXHQtd2Via2l0LXRyYW5zaXRpb246IHdpZHRoIDAuNXMsIGhlaWdodCAwLjVzO1xuXHQtbW96LXRyYW5zaXRpb246IHdpZHRoIDAuNXMsIGhlaWdodCAwLjVzO1xuXHR0cmFuc2l0aW9uOiB3aWR0aCAwLjVzLCBoZWlnaHQgMC41cztcbn1cblxuLnByb2dyZXNzLWJ1dHRvbiAudHotYmFyLmJhY2tncm91bmQtaG9yaXpvbnRhbCB7XG5cdGhlaWdodDogMTAwJTtcblx0Ym9yZGVyLXJhZGl1czogMnB4O1xufVxuXG4ucHJvZ3Jlc3MtYnV0dG9uIC50ei1iYXIuYmFja2dyb3VuZC12ZXJ0aWNhbCB7XG5cdGhlaWdodDogMDtcblx0dG9wOiAwO1xuXHR3aWR0aDogMTAwJTtcblx0Ym9yZGVyLXJhZGl1czogMnB4O1xufVxuXG4uYnV0dG9uVGl0bGUge1xuXHRmb250LXNpemU6IDAuNWVtO1xuXHRtYXJnaW4tdG9wOiA0cHg7XG59XG5cbiNjb250YWluZXIge1xuXHRoZWlnaHQ6IDEwMCU7XG5cdHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuI2NvbnRhaW5lcjpiZWZvcmUge1xuXHRjb250ZW50OiAnJztcblx0ZGlzcGxheTogaW5saW5lLWJsb2NrO1xuXHR2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlO1xuXHRoZWlnaHQ6IDEwMCU7XG59XG5cbiNwZXJjZW50YWdlVGV4dCB7XG5cdHdpZHRoOiA5NSU7XG5cdGRpc3BsYXk6IGlubGluZS1ibG9jaztcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHR2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlO1xuXHR6LWluZGV4OiAzO1xufVxuXG4uaGVhZGVyIHtcblx0cG9zaXRpb246IGZpeGVkO1xuXHR0b3A6IDA7XG5cdHotaW5kZXg6IDE7XG5cdHdpZHRoOiAxMDAlO1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZjFmMWYxO1xufVxuXG4ucHJvZ3Jlc3MtY29udGFpbmVyIHtcblx0d2lkdGg6IDEwMCU7XG5cdGhlaWdodDogNHB4O1xuXHRiYWNrZ3JvdW5kOiAjY2NjO1xufVxuXG4ucHJvZ3Jlc3MtYmFyIHtcblx0aGVpZ2h0OiA0cHg7XG5cdGJhY2tncm91bmQ6ICM0Y2FmNTA7XG5cdHdpZHRoOiAwJTtcbn1cblxuLmdyZWNhcHRjaGEtYmFkZ2Uge1xuXHR2aXNpYmlsaXR5OiBoaWRkZW47XG59XG4iXX0= */"]
+      });
+      /***/
+    },
+
+    /***/
     "isrl":
     /*!*********************************************************!*\
       !*** ./src/app/modules/core/footer/footer.component.ts ***!
@@ -1839,13 +2059,13 @@
         var _super2 = _createSuper(TextboxQuestion);
 
         function TextboxQuestion() {
-          var _this4;
+          var _this7;
 
           _classCallCheck(this, TextboxQuestion);
 
-          _this4 = _super2.apply(this, arguments);
-          _this4.controlType = "textbox";
-          return _this4;
+          _this7 = _super2.apply(this, arguments);
+          _this7.controlType = "textbox";
+          return _this7;
         }
 
         return TextboxQuestion;
@@ -1886,13 +2106,13 @@
         var _super3 = _createSuper(DropdownQuestion);
 
         function DropdownQuestion() {
-          var _this5;
+          var _this8;
 
           _classCallCheck(this, DropdownQuestion);
 
-          _this5 = _super3.apply(this, arguments);
-          _this5.controlType = "dropdown";
-          return _this5;
+          _this8 = _super3.apply(this, arguments);
+          _this8.controlType = "dropdown";
+          return _this8;
         }
 
         return DropdownQuestion;

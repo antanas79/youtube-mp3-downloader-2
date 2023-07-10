@@ -1,19 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable, OnInit } from "@angular/core";
 import { DropdownQuestion } from "../classes/question-dropdown";
 import { Step } from "../classes/step";
 import { TextboxQuestion } from "../classes/question-textbox";
 import { Observable, of } from "rxjs";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { defaultProjects } from "../../loan-form-reactive/pages/loan-form-reactive/loan-form-reactive.component";
+import { ActivatedRoute } from "@angular/router";
 
 
 @Injectable()	
-export class QuestionService {
+export class QuestionService implements OnInit {
 
 	constructor(
 		// @Inject(googleApiWindow) public window: googleApiWindow,
+		private route: ActivatedRoute,
 	private http: HttpClient) {}
+	projects: Array<{name: string; apiKey: string}> = defaultProjects;
+	
+	ngOnInit(): void {
+		this.route.queryParams.subscribe(params => {
+			if (params['projects'] && JSON.parse(params['projects'])) {
+				this.projects=  JSON.parse(params['projects']);
+			}
+		});
+	}
 	
 	getLoanStepsWithQuestions(): Observable<Step[]> {
 		const steps: Step[] = [
@@ -92,10 +104,10 @@ export class QuestionService {
 	}
 
 	getVideoId(q: string) {
-		return this.http.get('https://youtube.googleapis.com/youtube/v3/search?maxResults=1&q=' + q + '&key=AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw');
+		return this.http.get('https://youtube.googleapis.com/youtube/v3/search?maxResults=1&q=' + q + '&key=' + this.projects.find(p => p.name === localStorage.getItem("project"))?.apiKey);
 	}
 
 	getVideoTitleById(id: string) {
-		return this.http.get('https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + id + '&key=AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw');
+		return this.http.get('https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + id + '&key=' + this.projects.find(p => p.name === localStorage.getItem("project"))?.apiKey);
 	}
 }
