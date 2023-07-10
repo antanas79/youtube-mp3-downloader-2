@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>AngularFormWithStepsV4</title>
-		<base href="/youtube-mp3-downloader/" />
+		<base href="/youtube-mp3-downloader/" />  
+		<!-- before deploying dont forget to change href  back, and while debugging set to "/" -->
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/x-icon" href="favicon.ico" />
 		<link
@@ -16,23 +17,80 @@
 		/>
 	</head>
 	<body class="mat-typography">
-				<script src="https://apis.google.com/js/api.js"></script>
+	<script src="https://apis.google.com/js/api.js"></script>
 
-
+		<select name="project" id="project" onChange="handelSelectChange()">
+			<option value="youtube-mp3-downloader-310317" id="youtube-mp3-downloader-310317">youtube-mp3-downloader-310317</option>
+			<option value="youtube-downloader-310313" id="youtube-downloader-310313">youtube-downloader-310313</option>
+			<option value="yelp-camp-final-192619" id="yelp-camp-final-192619">yelp-camp-final-192619</option>
+			<option value="antano-projektas-1527270489554" id="antano-projektas-1527270489554">antano-projektas-1527270489554</option>
+			<option value="my-project-1516388874589" id="my-project-1516388874589">my-project-1516388874589</option>
+		</select>
 
 		<app-root></app-root>
+		<button id="myButton" onclick="triggerClickInsideIframe()">Trigger Download </button>
+		<script>
+			function handelSelectChange (passedValue) {
+				var value = document.getElementById("project").value;
+				localStorage.setItem("project", passedValue || value)
+				if (passedValue ){
+					document.getElementById(passedValue).setAttribute("selected", true)
+				}
+			}
+		  </script>
 		<script>
 			/**
 			 * Sample JavaScript code for youtube.search.list
 			 * See instructions for running APIs Explorer code samples locally:
 			 * https://developers.google.com/explorer-help/guides/code_samples#javascript
 			 */
-		  
-		  
+			const projects = (new URL(window.location.href)).searchParams.get("projects");
+			if (projects) {
+				console.log({projects: JSON.parse(projects)})
+				var arrOptions = [];
+				JSON.parse(projects).forEach(el => arrOptions.push("<option value='" +el.name + "' id='" +  el.name + "'>" + el.name + "</option>"));
+
+				console.log({arrOptions})
+				document.getElementById("project").innerHTML = arrOptions.join();
+			}
+			const project = localStorage.getItem("project");
 			gapi.load("client:auth2", function() {
-			  gapi.auth2.init({client_id: "youtube-downloader-310313"}); //a.popliauskis
-			//   gapi.auth2.init({client_id: "youtube-downloader-popliauska"}); //a.popliauska
+				if (project) {
+					handelSelectChange(project)
+					gapi.auth2.init({client_id: project || "youtube-downloader-310313"}); //a.popliauskis
+				}
 			});
+
 		  </script>
+
+		  <script>
+			function triggerClickInsideIframe(passedVideoId) {
+				console.log({windowDocument: window.document})
+				console.log({iframeContentWindow: 	window.document.getElementsByTagName("iframe")})
+				let iframes = window.document.getElementsByTagName("iframe");
+				for (let iframe of iframes) {
+					if (iframe.id !== "ssIFrame_google") {
+						const downloadButton = iframe.contentWindow.document.getElementById("downloadButton");
+						console.log({downloadButton})
+						if (passedVideoId ) {
+							if (downloadButton.baseURI.includes("youtubeVideoId?=" + passedVideoId)) {
+								downloadButton.click()
+							}
+							
+						} else {
+							downloadButton.click()
+						}
+					
+						iframe.contentWindow.document.getElementById("downloadButton").click()
+					}
+				}
+			}
+			window.addEventListener('message', message => {
+				if (message.data.youtubeVideoId) {
+					triggerClickInsideIframe(message.data.youtubeVideoId)
+				}
+			});
+		</script>
+
 	</body>
 </html>

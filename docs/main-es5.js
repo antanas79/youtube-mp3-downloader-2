@@ -772,25 +772,31 @@
       /* harmony import */
 
 
-      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! @angular/router */
+      "tyNb");
+      /* harmony import */
+
+
+      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/material/form-field */
       "kmnG");
       /* harmony import */
 
 
-      var _angular_material_input__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_material_input__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! @angular/material/input */
       "qFsG");
       /* harmony import */
 
 
-      var _angular_material_button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _angular_material_button__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @angular/material/button */
       "bTqV");
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
 
@@ -1268,13 +1274,14 @@
       window.gapi = window.gapi || {};
 
       var LoanFormReactiveComponent = /*#__PURE__*/function () {
-        function LoanFormReactiveComponent(window, _formBuilder, questionService, sanitizer) {
+        function LoanFormReactiveComponent(window, _formBuilder, questionService, sanitizer, route) {
           _classCallCheck(this, LoanFormReactiveComponent);
 
           this.window = window;
           this._formBuilder = _formBuilder;
           this.questionService = questionService;
           this.sanitizer = sanitizer;
+          this.route = route;
           this.ngUnsubscribe = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
           this.youtubeLinkFirstPart = "https://www.youtube.com/watch?v=";
           this.loaded = false;
@@ -1282,13 +1289,36 @@
           this.foundVideosArray = [];
           this.iframeUrls = [];
           this.titlesArray = [];
+          this.projects = [{
+            name: "youtube-mp3-downloader-310317",
+            apiKey: "AIzaSyCBdENLaNBmlzLO8pOkW6U0fB1ck8ZZfmw"
+          }, {
+            name: "youtube-downloader-310313",
+            apiKey: "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"
+          }, {
+            name: "yelp-camp-final-192619",
+            apiKey: "AIzaSyAxR0JLrvXg7JG9vw4ZIsNrRRpj_1s3anQ"
+          }, {
+            name: "antano-projektas-1527270489554",
+            apiKey: "AIzaSyBysEdNbj0M6ukqvcUz6C9cZETj4BbXWNk"
+          }, {
+            name: "my-project-1516388874589",
+            apiKey: "AIzaSyD72RK3MzzkeKT7qtejBjieqXiWcBOC0N4"
+          }];
         }
 
         _createClass(LoanFormReactiveComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
+            var _this = this;
+
             var _a;
 
+            this.route.queryParams.subscribe(function (params) {
+              if (params['projects'] && JSON.parse(params['projects'])) {
+                _this.projects = JSON.parse(params['projects']);
+              }
+            });
             (_a = this.authenticate()) === null || _a === void 0 ? void 0 : _a.then(this.loadClient());
             this.form = this._formBuilder.group({
               search: [null, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
@@ -1326,13 +1356,13 @@
         }, {
           key: "loadClient",
           value: function loadClient() {
-            var _a, _b;
+            var _a, _b, _c;
 
-            this.window.gapi.client.setApiKey("AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"); //a.popliauskis
-            // this.window.gapi.client.setApiKey("AIzaSyDvEs9yxwfpbDg3TpF17utrLB_qqzPYmgw"); //a.popliauska
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            this.window.gapi.client.setApiKey(((_a = this.projects.find(function (p) {
+              return p.name === localStorage.getItem("project");
+            })) === null || _a === void 0 ? void 0 : _a.apiKey) || "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"); //a.popliauskis
 
-            return (_b = (_a = this.window.gapi.client) === null || _a === void 0 ? void 0 : _a.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")) === null || _b === void 0 ? void 0 : _b.then(function () {
+            return (_c = (_b = this.window.gapi.client) === null || _b === void 0 ? void 0 : _b.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")) === null || _c === void 0 ? void 0 : _c.then(function () {
               console.log("GAPI client loaded for API");
             }, function (err) {
               console.error("Error loading GAPI client for API", err);
@@ -1341,21 +1371,21 @@
         }, {
           key: "search",
           value: function search() {
-            var _this = this;
+            var _this2 = this;
 
             var _loop = function _loop(i) {
-              _this.questionService.getVideoId(_this.form.value.searchArray[i].searchValue).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this.ngUnsubscribe)).subscribe(function (resp) {
+              _this2.questionService.getVideoId(_this2.form.value.searchArray[i].searchValue).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this2.ngUnsubscribe)).subscribe(function (resp) {
                 if (resp) {
-                  _this.questionService.getVideoTitleById(resp.items[0].id.videoId).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this.ngUnsubscribe)).subscribe(function (res) {
-                    var url = "https://loader.to/api/button/?url=" + _this.youtubeLinkFirstPart + resp.items[0].id.videoId + "&f=mp3&color=64c896";
+                  _this2.questionService.getVideoTitleById(resp.items[0].id.videoId).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this2.ngUnsubscribe)).subscribe(function (res) {
+                    var url = "assets/loader.html/?url=" + _this2.youtubeLinkFirstPart + resp.items[0].id.videoId + "&f=mp3&color=64c896&youtubeVideoId=" + resp.items[0].id.videoId;
 
-                    var sanitizedUrl = _this.sanitizer.bypassSecurityTrustResourceUrl(url);
+                    var sanitizedUrl = _this2.sanitizer.bypassSecurityTrustResourceUrl(url);
 
-                    _this.foundVideosArray.push({
+                    _this2.foundVideosArray.push({
                       title: res.items[0].snippet.title,
                       videoId: resp.items[0].id.videoId,
                       iframeUrl: sanitizedUrl,
-                      searchedValue: _this.form.value.searchArray[i].searchValue
+                      searchedValue: _this2.form.value.searchArray[i].searchValue
                     });
 
                     setTimeout(function () {
@@ -1415,12 +1445,12 @@
         }, {
           key: "submit",
           value: function submit() {
-            var _this2 = this;
+            var _this3 = this;
 
             var enteredSearchArray = this.form.getRawValue().search.split("\n");
             var editableSearchArray = this.form.controls.editableSearchArray;
             enteredSearchArray.forEach(function (search) {
-              editableSearchArray.push(_this2._formBuilder.group({
+              editableSearchArray.push(_this3._formBuilder.group({
                 searchValue: [search]
               }));
             });
@@ -1466,13 +1496,18 @@
             this.ngUnsubscribe.next();
             this.ngUnsubscribe.complete();
           }
+        }, {
+          key: "ngOnChanges",
+          value: function ngOnChanges() {
+            console.log("changes");
+          }
         }]);
 
         return LoanFormReactiveComponent;
       }();
 
       LoanFormReactiveComponent.ɵfac = function LoanFormReactiveComponent_Factory(t) {
-        return new (t || LoanFormReactiveComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](googleApiWindow), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_shared_services_question_service__WEBPACK_IMPORTED_MODULE_1__["QuestionService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__["DomSanitizer"]));
+        return new (t || LoanFormReactiveComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](googleApiWindow), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_shared_services_question_service__WEBPACK_IMPORTED_MODULE_1__["QuestionService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__["DomSanitizer"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"]));
       };
 
       LoanFormReactiveComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({
@@ -1483,7 +1518,7 @@
           useValue: {
             showError: true
           }
-        }, _shared_services_question_service__WEBPACK_IMPORTED_MODULE_1__["QuestionService"]])],
+        }, _shared_services_question_service__WEBPACK_IMPORTED_MODULE_1__["QuestionService"]]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵNgOnChangesFeature"]],
         decls: 15,
         vars: 6,
         consts: [[1, "col-12", "p-0", "d-flex", "flex-wrap", 3, "formGroup"], [1, "col-6", "p-0"], ["matInput", "", "formControlName", "search"], ["mat-button", "", "type", "submit", 3, "click"], [4, "ngIf"], [4, "ngFor", "ngForOf"], ["mat-raised-button", "", 3, "click", 4, "ngIf"], ["class", "col-6 p-0", 4, "ngIf"], ["matInput", "", "formControlName", "numberToTrimFromStart", "type", "number", "placeholder", "How many chars to trim from start"], ["mat-button", "", 3, "click"], ["matInput", "", "formControlName", "whatCharacterToTrim", "type", "text", "placeholder", "What character to trim"], ["formArrayName", "editableSearchArray"], [3, "formGroupName"], ["matInput", "", "formControlName", "searchValue", "type", "text"], ["mat-button", "", "color", "warn", 3, "click"], ["mat-raised-button", "", 3, "click"], ["formArrayName", "searchArray"], [1, "d-flex", "col-12", "p-0"], [1, "border-top", "border-bottom", "mb-2", "d-flex", "align-items-center", "col-12", "p-0"], [1, "col-3"], ["class", "d-flex col-12 p-0", 4, "ngFor", "ngForOf"], ["class", "mt-3 pt-3", 4, "ngIf"], ["download", "", "scrolling", "no", 1, "col-3", "mr-3", 2, "width", "230px", "height", "60px", "border", "0", "overflow", "hidden", 3, "src", "click"], ["target", "_blank", 1, "col-3", 3, "href"], [1, "col-3", "d-flex"], ["mat-raised-button", "", "color", "accent", 1, "mr-1", 3, "click"], ["mat-raised-button", "", "color", "warn", 3, "click"], [1, "mt-3", "pt-3"], ["formArrayName", "incorrectArray"], ["formControlName", "searchValue"]],
@@ -1560,7 +1595,7 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.foundVideosArray.length > 0);
           }
         },
-        directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_7__["MatFormField"], _angular_material_input__WEBPACK_IMPORTED_MODULE_8__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControlName"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_7__["MatError"], _angular_material_button__WEBPACK_IMPORTED_MODULE_9__["MatButton"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NumberValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormArrayName"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupName"]],
+        directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_8__["MatFormField"], _angular_material_input__WEBPACK_IMPORTED_MODULE_9__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControlName"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_8__["MatError"], _angular_material_button__WEBPACK_IMPORTED_MODULE_10__["MatButton"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NumberValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormArrayName"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupName"]],
         styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJsb2FuLWZvcm0tcmVhY3RpdmUuY29tcG9uZW50LnNjc3MifQ== */"]
       });
       LoanFormReactiveComponent.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjectable"]({
@@ -1795,13 +1830,13 @@
         var _super2 = _createSuper(TextboxQuestion);
 
         function TextboxQuestion() {
-          var _this3;
+          var _this4;
 
           _classCallCheck(this, TextboxQuestion);
 
-          _this3 = _super2.apply(this, arguments);
-          _this3.controlType = "textbox";
-          return _this3;
+          _this4 = _super2.apply(this, arguments);
+          _this4.controlType = "textbox";
+          return _this4;
         }
 
         return TextboxQuestion;
@@ -1842,13 +1877,13 @@
         var _super3 = _createSuper(DropdownQuestion);
 
         function DropdownQuestion() {
-          var _this4;
+          var _this5;
 
           _classCallCheck(this, DropdownQuestion);
 
-          _this4 = _super3.apply(this, arguments);
-          _this4.controlType = "dropdown";
-          return _this4;
+          _this5 = _super3.apply(this, arguments);
+          _this5.controlType = "dropdown";
+          return _this5;
         }
 
         return DropdownQuestion;

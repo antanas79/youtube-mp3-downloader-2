@@ -6,7 +6,8 @@ import {
 	OnInit,
 	OnDestroy,
 	Injectable,
-	Inject
+	Inject,
+	OnChanges
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { QuestionService } from "../../../shared/services/question.service";
@@ -15,6 +16,7 @@ import { takeUntil } from "rxjs/operators";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { Step } from "../../../shared/classes/step";
 import { DomSanitizer } from "@angular/platform-browser";
+import { ActivatedRoute } from "@angular/router";
 
 declare global {
 	interface Window {
@@ -41,7 +43,7 @@ window.gapi = window.gapi || {};
 		QuestionService
 	]
 })
-export class LoanFormReactiveComponent implements OnInit, OnDestroy {
+export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 	private ngUnsubscribe = new Subject();
 	youtubeLinkFirstPart = "https://www.youtube.com/watch?v=";
 	loaded = false;
@@ -50,15 +52,25 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 	foundVideosArray = [];
 	iframeUrls = [];
 	titlesArray = [];
+	projects =  [{name: "youtube-mp3-downloader-310317", apiKey: "AIzaSyCBdENLaNBmlzLO8pOkW6U0fB1ck8ZZfmw"},
+	{name: "youtube-downloader-310313", apiKey: "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"}, {name: "yelp-camp-final-192619", apiKey: "AIzaSyAxR0JLrvXg7JG9vw4ZIsNrRRpj_1s3anQ"},
+	{name: "antano-projektas-1527270489554", apiKey: "AIzaSyBysEdNbj0M6ukqvcUz6C9cZETj4BbXWNk"}, {name: "my-project-1516388874589", apiKey: "AIzaSyD72RK3MzzkeKT7qtejBjieqXiWcBOC0N4"}];
+	
 
 	constructor(
 		@Inject(googleApiWindow) public window: googleApiWindow,
 		public _formBuilder: FormBuilder,
 		public questionService: QuestionService,
-		private sanitizer: DomSanitizer
+		private sanitizer: DomSanitizer,
+		private route: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
+		this.route.queryParams.subscribe(params => {
+			if (params['projects'] && JSON.parse(params['projects'])) {
+				this.projects=  JSON.parse(params['projects']);
+			}
+		});
 		this.authenticate()?.then(this.loadClient());
 		this.form = this._formBuilder.group({
 			search: [null, Validators.required],
@@ -68,6 +80,7 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 			searchArray: this._formBuilder.array([]),
 			incorrectArray: this._formBuilder.array([])
 		});
+
 	}
 	get editableSearchArray() {
 		return <FormArray>this.form.get("editableSearchArray");
@@ -95,11 +108,9 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 
 	loadClient() {
 		this.window.gapi.client.setApiKey(
-			"AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"
+			this.projects.find(p => p.name === localStorage.getItem("project"))?.apiKey || "AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"
 		);
 		//a.popliauskis
-		// this.window.gapi.client.setApiKey("AIzaSyDvEs9yxwfpbDg3TpF17utrLB_qqzPYmgw"); //a.popliauska
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return this.window.gapi.client
 			?.load(
 				"https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
@@ -126,10 +137,10 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 							.pipe(takeUntil(this.ngUnsubscribe))
 							.subscribe((res: any) => {
 								let url =
-									"https://loader.to/api/button/?url=" +
+									"assets/loader.html/?url=" +
 									this.youtubeLinkFirstPart +
 									resp.items[0].id.videoId +
-									"&f=mp3&color=64c896";
+									"&f=mp3&color=64c896&youtubeVideoId=" +resp.items[0].id.videoId;
 								let sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
 									url
 								);
@@ -256,6 +267,10 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 		// prevent memory leak when component destroyed
 		this.ngUnsubscribe.next();
 		this.ngUnsubscribe.complete();
+	}
+
+	ngOnChanges():void {
+		console.log("changes")
 	}
 
 	//TODO
