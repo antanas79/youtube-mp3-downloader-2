@@ -24,12 +24,8 @@
 			<option value="youtube-mp3-downloader-392415" id="youtube-mp3-downloader-392415">youtube-mp3-downloader-392415</option>
 			<option value="youtube-downloader-310313" id="youtube-downloader-310313">youtube-downloader-310313</option>
 		</select>
-		<button id="myButton" style="height: 50px; width: 300px" onclick="triggerClickInsideIframe()">Trigger Download ALL</button>
 		<app-root></app-root>
-		<script type="text/javascript">
-			console.log({window: window.location.href})
-			document.write("<base href=" + window.location.href.includes("localhost") ?  "/": "/youtube-mp3-downloader/" + "' />");
-		</script>
+
 		<script>
 			function handelSelectChange (passedValue) {
 				var value = document.getElementById("project").value;
@@ -45,6 +41,7 @@
 			 * See instructions for running APIs Explorer code samples locally:
 			 * https://developers.google.com/explorer-help/guides/code_samples#javascript
 			 */
+			//IMPORTANT:projects can be passed via URL before stringifying the array of them [{name, apiKey}]
 			const projects = (new URL(window.location.href)).searchParams.get("projects");
 			if (projects) {
 				const parsedProjects = JSON.parse(projects)
