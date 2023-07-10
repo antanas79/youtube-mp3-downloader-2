@@ -79,8 +79,8 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 	authenticate() {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return this.window.gapi.auth2
-			.getAuthInstance()
-			.signIn({
+			?.getAuthInstance()
+			?.signIn({
 				scope: "https://www.googleapis.com/auth/youtube.force-ssl"
 			})
 			.then(
