@@ -59,7 +59,7 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.authenticate().then(this.loadClient());
+		this.authenticate()?.then(this.loadClient());
 		this.form = this._formBuilder.group({
 			search: [null, Validators.required],
 			editableSearchArray: this._formBuilder.array([]),

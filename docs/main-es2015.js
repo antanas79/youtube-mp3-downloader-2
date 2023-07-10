@@ -659,7 +659,8 @@ class LoanFormReactiveComponent {
         this.titlesArray = [];
     }
     ngOnInit() {
-        this.authenticate().then(this.loadClient());
+        var _a;
+        (_a = this.authenticate()) === null || _a === void 0 ? void 0 : _a.then(this.loadClient());
         this.form = this._formBuilder.group({
             search: [null, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             editableSearchArray: this._formBuilder.array([]),
