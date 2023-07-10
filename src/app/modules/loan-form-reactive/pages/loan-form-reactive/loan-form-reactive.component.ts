@@ -136,11 +136,13 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 							.getVideoTitleById(resp.items[0].id.videoId)
 							.pipe(takeUntil(this.ngUnsubscribe))
 							.subscribe((res: any) => {
-								let url =
-									"assets/loader.html/?url=" +
+								console.log({window: this.window.location.href})
+								console.log({windowIncludes: this.window.location.href.includes("localhost")})
+								let url =  (this.window.location.href.includes("localhost") ? "" : "youtube-mp3-downloader") + "assets/loader.html/?url=" +
 									this.youtubeLinkFirstPart +
 									resp.items[0].id.videoId +
 									"&f=mp3&color=64c896&youtubeVideoId=" +resp.items[0].id.videoId;
+								console.log({url})
 								let sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
 									url
 								);

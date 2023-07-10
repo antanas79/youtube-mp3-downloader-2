@@ -22,7 +22,10 @@
 		</select>
 		<button id="myButton" style="height: 50px; width: 300px" onclick="triggerClickInsideIframe()">Trigger Download ALL</button>
 		<app-root></app-root>
-	
+		<script type="text/javascript">
+			console.log({window: window.location.href})
+			document.write("<base href=" + window.location.href.includes("localhost") ?  "/": "/youtube-mp3-downloader/" + "' />");
+		</script>
 		<script>
 			function handelSelectChange (passedValue) {
 				var value = document.getElementById("project").value;
@@ -80,6 +83,7 @@
 					triggerClickInsideIframe(message.data.youtubeVideoId)
 				}
 			});
+			
 		</script>
 
 	<script src="runtime-es2015.js" type="module"></script><script src="runtime-es5.js" nomodule defer></script><script src="polyfills-es5.js" nomodule defer></script><script src="polyfills-es2015.js" type="module"></script><script src="vendor-es2015.js" type="module"></script><script src="vendor-es5.js" nomodule defer></script><script src="main-es2015.js" type="module"></script><script src="main-es5.js" nomodule defer></script></body>

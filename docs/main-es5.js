@@ -1377,7 +1377,16 @@
               _this2.questionService.getVideoId(_this2.form.value.searchArray[i].searchValue).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this2.ngUnsubscribe)).subscribe(function (resp) {
                 if (resp) {
                   _this2.questionService.getVideoTitleById(resp.items[0].id.videoId).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this2.ngUnsubscribe)).subscribe(function (res) {
-                    var url = "assets/loader.html/?url=" + _this2.youtubeLinkFirstPart + resp.items[0].id.videoId + "&f=mp3&color=64c896&youtubeVideoId=" + resp.items[0].id.videoId;
+                    console.log({
+                      window: _this2.window.location.href
+                    });
+                    console.log({
+                      windowIncludes: _this2.window.location.href.includes("localhost")
+                    });
+                    var url = (_this2.window.location.href.includes("localhost") ? "" : "youtube-mp3-downloader") + "assets/loader.html/?url=" + _this2.youtubeLinkFirstPart + resp.items[0].id.videoId + "&f=mp3&color=64c896&youtubeVideoId=" + resp.items[0].id.videoId;
+                    console.log({
+                      url: url
+                    });
 
                     var sanitizedUrl = _this2.sanitizer.bypassSecurityTrustResourceUrl(url);
 
