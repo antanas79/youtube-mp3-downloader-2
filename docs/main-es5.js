@@ -1882,7 +1882,8 @@
             fetch("https://loader.to/ajax/download.php?button=1&start=" + 1 + "&end=" + 1 + "&format=" + this.format + "&url=" + encodeURIComponent(this.link_now), {
               headers: {
                 'Accept': 'application/json'
-              }
+              },
+              mode: "no-cors"
             }).then(function (response) {
               return response.json();
             }).then(function (response) {
@@ -1897,7 +1898,8 @@
             fetch("https://loader.to/ajax/progress.php?id=" + i, {
               headers: {
                 'Accept': 'application/json'
-              }
+              },
+              mode: "no-cors"
             }).then(function (response) {
               return response.json();
             }).then(function (response) {

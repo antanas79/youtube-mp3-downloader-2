@@ -1012,13 +1012,13 @@ class LoaderComponent {
     download() {
         fetch("https://loader.to/ajax/download.php?button=1&start=" + 1 + "&end=" + 1 + "&format=" + this.format + "&url=" + encodeURIComponent(this.link_now), { headers: {
                 'Accept': 'application/json',
-            }, }).then(response => response.json())
+            }, mode: "no-cors" }).then(response => response.json())
             .then(response => this.showProgressAndSetDownloadUrl(response.id));
     }
     showProgressAndSetDownloadUrl(i) {
         fetch("https://loader.to/ajax/progress.php?id=" + i, { headers: {
                 'Accept': 'application/json',
-            } }).then(response => response.json())
+            }, mode: "no-cors" }).then(response => response.json())
             .then(response => {
             console.log({ response });
             this.progress = response.progress / 10;
