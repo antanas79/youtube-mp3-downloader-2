@@ -143,6 +143,7 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy, OnChanges {
 									resp.items[0].id.videoId +
 									"&f=mp3&color=64c896&youtubeVideoId=" +resp.items[0].id.videoId;
 								console.log({url})
+								
 								let sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
 									url
 								);
