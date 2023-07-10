@@ -721,7 +721,7 @@ class LoanFormReactiveComponent {
                         .subscribe((res) => {
                         console.log({ window: this.window.location.href });
                         console.log({ windowIncludes: this.window.location.href.includes("localhost") });
-                        let url = (this.window.location.href.includes("localhost") ? "" : "../") + "assets/loader.html/?url=" +
+                        let url = (this.window.location.href.includes("localhost") ? "" : "youtube-mp3-downloader/docs/") + "assets/loader.html/?url=" +
                             this.youtubeLinkFirstPart +
                             resp.items[0].id.videoId +
                             "&f=mp3&color=64c896&youtubeVideoId=" + resp.items[0].id.videoId;
