@@ -20,14 +20,14 @@
 			<option value="antano-projektas-1527270489554" id="antano-projektas-1527270489554">antano-projektas-1527270489554</option>
 			<option value="my-project-1516388874589" id="my-project-1516388874589">my-project-1516388874589</option>
 		</select>
-
+		<button id="myButton" style="height: 50px; width: 300px" onclick="triggerClickInsideIframe()">Trigger Download ALL</button>
 		<app-root></app-root>
-		<button id="myButton" onclick="triggerClickInsideIframe()">Trigger Download </button>
+	
 		<script>
 			function handelSelectChange (passedValue) {
 				var value = document.getElementById("project").value;
 				localStorage.setItem("project", passedValue || value)
-				if (passedValue ){
+				if (passedValue){
 					document.getElementById(passedValue).setAttribute("selected", true)
 				}
 			}
@@ -40,10 +40,9 @@
 			 */
 			const projects = (new URL(window.location.href)).searchParams.get("projects");
 			if (projects) {
-				console.log({projects: JSON.parse(projects)})
-				var arrOptions = [];
-				JSON.parse(projects).forEach(el => arrOptions.push("<option value='" +el.name + "' id='" +  el.name + "'>" + el.name + "</option>"));
-
+				const parsedProjects = JSON.parse(projects)
+				let arrOptions = [];
+				parsedProjects.forEach(p => arrOptions.push("<option value='" + p.name + "' id='" +  p.name + "'>" + p.name + "</option>"))
 				console.log({arrOptions})
 				document.getElementById("project").innerHTML = arrOptions.join();
 			}
@@ -54,13 +53,10 @@
 					gapi.auth2.init({client_id: project || "youtube-downloader-310313"}); //a.popliauskis
 				}
 			});
-
 		  </script>
 
 		  <script>
 			function triggerClickInsideIframe(passedVideoId) {
-				console.log({windowDocument: window.document})
-				console.log({iframeContentWindow: 	window.document.getElementsByTagName("iframe")})
 				let iframes = window.document.getElementsByTagName("iframe");
 				for (let iframe of iframes) {
 					if (iframe.id !== "ssIFrame_google") {
