@@ -3,6 +3,7 @@
 	<meta name="robots" content="noindex">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+	<base href="/" />  
 	<meta name="language" content="en">
 	<meta name="description" content="Download your favorite YouTube videos and playlists from the internet without registration for free. Convert your favorite YouTube videos to MP3, MP4 and M4A.">
 	<meta name="google" content="notranslate">
@@ -10,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-	<script src="jquery-3.6.4.min.js"></script>
+	<script src="assets/jquery.min.js"></script>
 	<style>
 			html,
 			body {
@@ -178,12 +179,12 @@
 		</style>
 	</head>
 	<body>
-		<app-root></app-root>
+	
 	<div class="header">
 	<div class="progress-container">
 	<div class="progress-bar" id="myBar"></div>
 	</div>
-	</div><a id="downloadButton" onclick="d();" href="#">
+	</div><a id="downloadButton" onclick="download();" href="#">
 	<div id="container" class="progress-button" style="background-color: rgb(100, 200, 150);">
 	<div id="percentageText"><svg id="icon" style="width:20px;height:20px;fill:#ffffff;enable-background:new 0 0 475.078 475.077" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 475.078 475.077" version="1.1" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<g>
@@ -200,19 +201,17 @@
 			var link_now = new URL(window.location.href);
 	
 			if (link_now.searchParams.get("css") != null) {
-	
 				document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",
 					"<link rel=\"stylesheet\" href=\"" + link_now.searchParams.get("css") + "\" />");
-	
 			}
 	
-			var icon = document.getElementById("icon").outerHTML;
-			var url = link_now.searchParams.get("url");
-			var youtubeVideoId = link_now.searchParams.get("youtubeVideoId");
-			var f = link_now.searchParams.get("f");
-			var color = link_now.searchParams.get("color");
+			var url = new URL(link_now.searchParams.get("url"));
+			console.log({urlId: url.searchParams.get("v")})
+			let youtubeVideoId = url.searchParams.get("v");
+			let format = url.searchParams.get("f") || "mp3";
+			let color = link_now.searchParams.get("color");
 			document.getElementById("container").style.backgroundColor = "#" + color;
-			switch (f) {
+			switch (format) {
 				case "mp3":
 					document.getElementById("format").innerHTML = "MP3";
 					break;
@@ -225,20 +224,19 @@
 					f = "wav";
 					break;
 				default:
-					document.getElementById("format").innerHTML = "MP4 720p";
-					f = "720";
+					document.getElementById("format").innerHTML = "MP3";
+					break;
 			}
 			document.getElementById("buttonTitle").innerHTML = url;
+			download()
 	
 			function download() {
-				link = link_now.searchParams.get("url");
-				format = f;
 				start = 1;
 				end = 1;
 				document.getElementById("percentageText").innerHTML = 'One moment...';
 				$("#downloadButton").attr("onclick", "");
-				$.get("https://loader.to/ajax/download.php?button=1&start=1&end=1&format=" + format + "&url=" + encodeURIComponent(link), function (data, status) {
-					p(data.id);
+				$.get("https://loader.to/ajax/download.php?button=1&start=1&end=1&format=" + format + "&url=" + encodeURIComponent(new URL("https://www.youtube.com/watch?v=" + url.searchParams.get("v"))), function (data, status) {
+					showProgressAndDownload(data.id);
 				}, "json");
 			}
 	
@@ -247,15 +245,16 @@
 					document.getElementById("percentageText").innerHTML = data.progress / 10 + "% done";
 					document.getElementById("myBar").style.width = data.progress / 10 + "%";
 					if (data.download_url != null && data.success == 1) {
-						document.getElementById("percentageText").innerHTML = icon + " Download Now!";
+						document.getElementById("percentageText").innerHTML =  " Download Now!";
 						window.parent.postMessage({ youtubeVideoId, downloaded: true}, "*")
 						$("#downloadButton").attr("href", data.download_url);
 						$("#downloadButton").click();
+						$("#downloadButton")[0].click();
 						return;
 					}
-					setTimeout(p.bind(null, i), 750);
+					setTimeout(showProgressAndDownload.bind(null, i), 750);
 				}, "json").fail(function () {
-					setTimeout(p.bind(null, i), 750);
+					setTimeout(showProgressAndDownload.bind(null, i), 750);
 				});
 			} //automatic country determination. function initCountry(){ return new Promise((resolve, reject)=>{ var xhr=new XMLHttpRequest(); xhr.timeout=3000; xhr.onreadystatechange=function (){ if (this.readyState==4){ if (this.status==200){ countryCode=countryCodeExpression.exec(this.responseText) ip=userIPExpression.exec(this.responseText) if (countryCode===null || countryCode[1]==='' || ip===null || ip[1]===''){ reject('IP/Country code detection failed');} let result={ "countryCode":countryCode[1], "IP":ip[1]}; user_country=countryCode[1]; resolve(result)} else{ reject(xhr.status)}}} xhr.ontimeout=function (){ reject('timeout')} xhr.open('GET', 'https://www.cloudflare.com/cdn-cgi/trace', true); xhr.send();});} initCountry(); 
 		</script>

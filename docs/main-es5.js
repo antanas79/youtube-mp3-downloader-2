@@ -37,7 +37,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       module.exports = __webpack_require__(
-      /*! /Users/antanas/Downloads/youtube-mp3-downloader/src/main.ts */
+      /*! /Users/antanas/Downloads/youtube-mp3-downloader-2/src/main.ts */
       "zUnb");
       /***/
     },
