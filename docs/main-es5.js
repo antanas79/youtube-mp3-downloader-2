@@ -1324,11 +1324,13 @@
         }, {
           key: "loadClient",
           value: function loadClient() {
+            var _a, _b;
+
             this.window.gapi.client.setApiKey("AIzaSyCVFuPYF1DCVTKf3GydrbcG7bY0Ws15DBw"); //a.popliauskis
             // this.window.gapi.client.setApiKey("AIzaSyDvEs9yxwfpbDg3TpF17utrLB_qqzPYmgw"); //a.popliauska
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
 
-            return this.window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest").then(function () {
+            return (_b = (_a = this.window.gapi.client) === null || _a === void 0 ? void 0 : _a.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")) === null || _b === void 0 ? void 0 : _b.then(function () {
               console.log("GAPI client loaded for API");
             }, function (err) {
               console.error("Error loading GAPI client for API", err);

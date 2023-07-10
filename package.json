@@ -1,7 +1,7 @@
 {
   "name": "youtube-mp3-downloader",
   "version": "0.0.0",
-  "homepage": "https://antanas79.github.io/youtube-mp3-downloader",
+  "homepage": "https://antanas79.github.io/youtube-mp3-downloader/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

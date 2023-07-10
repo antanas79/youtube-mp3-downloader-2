@@ -101,10 +101,10 @@ export class LoanFormReactiveComponent implements OnInit, OnDestroy {
 		// this.window.gapi.client.setApiKey("AIzaSyDvEs9yxwfpbDg3TpF17utrLB_qqzPYmgw"); //a.popliauska
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return this.window.gapi.client
-			.load(
+			?.load(
 				"https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
 			)
-			.then(
+			?.then(
 				function () {
 					console.log("GAPI client loaded for API");
 				},
