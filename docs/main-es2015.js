@@ -676,13 +676,11 @@ class LoanFormReactiveComponent {
         return this.form.get("searchArray");
     }
     authenticate() {
+        var _a, _b;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return this.window.gapi.auth2
-            .getAuthInstance()
-            .signIn({
+        return (_b = (_a = this.window.gapi.auth2) === null || _a === void 0 ? void 0 : _a.getAuthInstance()) === null || _b === void 0 ? void 0 : _b.signIn({
             scope: "https://www.googleapis.com/auth/youtube.force-ssl"
-        })
-            .then(function () {
+        }).then(function () {
             console.log("Sign-in successful");
         }, function (err) {
             console.error("Error signing in", err);
